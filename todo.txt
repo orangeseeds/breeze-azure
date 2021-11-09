@@ -1,0 +1,9 @@
+HomeController -> SearchController (SearchName, SearchCourse, fetch)
+ClassSize -> enum of Small|Mid|Large -> validator ma
+Collection -> Small => 10, Mid => 20, Large => 30
+Check validatedData["classSize"], if small, refer to the collection value and set that value of small and accordingly
+
+While Converting to Vue, use APIResource
+Avoid manual queries in searchController
+
+rename variables to follow the same convention

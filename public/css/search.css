@@ -1,0 +1,24 @@
+.form-check-input:checked{
+  background-color: #6c3fb3;
+  border-color: #6c3fb3;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    background: #6c3fb3;
+}
+input[type=range]::-moz-range-thumb {
+    background: #6c3fb3;
+}
+input[type=range]::-ms-thumb {
+    background: #6c3fb3;
+}
+
+.btn-theme{
+  background-color: #6c3fb3;
+  color: white;
+}
+
+.btn-theme:hover{
+  /* font-weight: bold; */
+  /* color: white; */
+}

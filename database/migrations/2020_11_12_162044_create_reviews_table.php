@@ -15,11 +15,11 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('writer');
-            $table->string('email');
+            $table->string('writer_name');
+            $table->string('writer_email');
             $table->year('joined_at');
             $table->foreignId('consultancy_id')->constrained()->onDelete('cascade');
-            $table->string('description');
+            $table->string('description', 1000);
             $table->foreignId('course_id')->constrained()->nullable();
             $table->decimal('rating',3,2); //out of 5
             $table->timestamps();

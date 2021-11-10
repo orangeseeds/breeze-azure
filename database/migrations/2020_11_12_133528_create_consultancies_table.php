@@ -25,7 +25,7 @@ class CreateConsultanciesTable extends Migration
             $table->string('location')->nullable();
             $table->string('website')->nullable();
             $table->decimal('rating',3,2)->nullable(); //out of 5
-            $table->string('description')->nullable();
+            $table->string('description', 1000)->nullable();
             $table->bigInteger('page_views')->default(0);
             $table->boolean('sponsored')->default(0);
             $table->timestamps();

@@ -15,16 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CountrySeeder::class,
-            DataRowsTableSeeder::class,
             DataTypesTableSeeder::class,
-            MenuItemsTableSeeder::class,
+            DataRowsTableSeeder::class,
             MenusTableSeeder::class,
-            PermissionRoleTableSeeder::class,
-            PermissionTableSeeder::class,
+            MenuItemsTableSeeder::class,
             RolesTableSeeder::class,
+            PermissionsTableSeeder::class,
+            PermissionRoleTableSeeder::class,
             SettingsTableSeeder::class,
-            TranslationsTableSeeder::class,
-            VoyagerDatabaseSeeder::class,
+            // TranslationsTableSeeder::class,
+            // VoyagerDatabaseSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }

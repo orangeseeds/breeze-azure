@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Consultancy;
 use App\Models\Course;
-use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendContactEmail;
 use DB;
 
 class HomeController extends Controller
@@ -29,11 +30,7 @@ class HomeController extends Controller
         ]);
 
 
-        $mailMessage = "From: " . $validatedData["email"] . "\nMessage: \n" . $validatedData["message"];
-        Mail::raw($mailMessage, function ($message) {
-            $message->to('consultancy@admin.com')
-                ->subject("Consultancy website Contact Form!");
-        });
+        SendContactEmail::dispatch($validatedData);
 
         return redirect()->back()->with('message','We will get back to you as soon as possible!');
     }
@@ -69,7 +66,11 @@ class HomeController extends Controller
     {
      if($request->get('query'))
      {
-       $query = $request->get('query');
+       $validatedData = $request->validate([
+           'query' => 'required|string|min:2|max:60'
+       ]);
+
+       $query = $validatedData['query'];
 
          $data = Consultancy::where('name', 'LIKE', "%{$query}%");
          return view('search.autocomplete',["data"=>$data->paginate(10)]);

@@ -1,3 +1,6 @@
+@php
+  $total_students = 0;
+@endphp
 <div id="{{$consultancy->slug}}card">
       <div class="card px-2 pb-4 mt-3 search-result overflow-hidden">
         <div class="overflow-hidden" style="height: 200px;">
@@ -55,6 +58,9 @@
                           Avg. Class Size
                           <span style="color: #444444;">
                             {{$course->pivot->class_size}}
+                            @php
+                              $total_students += $course->pivot->class_size;
+                            @endphp
                           </span>
                         </div>
                     </div>
@@ -74,7 +80,7 @@
 
           <div class="mt-4">
             <h5 class="card-title fs-6 fw-bold" style="color:#444444;">Total Students</h5>
-            <p class="">{{$course->pivot->class_size}}</p>
+            <p class="">{{$total_students}}</p>
           </div>
 
 

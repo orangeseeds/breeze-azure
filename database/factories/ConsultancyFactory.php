@@ -23,12 +23,13 @@ class ConsultancyFactory extends Factory
     {
         return [
             //
-            'name' => $this->faker->name,
-            'slug' => $this->faker->unique()->slug,
+            'name' => $this->faker->company(),
+            'slug' => $this->faker->unique()->slug(),
             'location' => $this->faker->city,
-            'website' => $this->faker->unique()->url,
-            'description' => $this->faker->paragraph,
-            // 'remember_token' => Str::random(10),
+            'website' => $this->faker->unique()->url(),
+            'description' => $this->faker->paragraph(),
+            'profile_picture' => Consultancy::inRandomOrder()->whereNotNull('profile_picture')->first()->profile_picture,
+            'cover_picture' => Consultancy::inRandomOrder()->whereNotNull('cover_picture')->first()->cover_picture,
         ];
     }
 }

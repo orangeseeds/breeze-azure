@@ -1,13 +1,21 @@
-<div class="absolute left-0 rounded-b-lg w-full bg-white border border-gray-200 border-t-0 text-left px-4 shadow-md">
+{{-- <div class="absolute left-0 rounded-b-lg w-full bg-white border border-gray-200 border-t-0 text-left px-4 shadow-md">
   <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
   @foreach($data as $result)
 
-   <a href="/consultancy/{{$result->slug}}" class="block px-2 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900">
      <p class="leading-none">{{$result->name}}
        <br>
        <span class="text-xs text-gray-500">{{$result->location}}</span>
      </p>
-   </a>
   @endforeach
   </div>
-</div>
+</div> --}}
+
+@foreach($data as $result)
+  <a href="{{route('consultancy.show',$result->slug)}}" style="text-decoration: none; color:inherit;">
+    <button value="{{$result->slug}}" type="button" class="list-group-item text-start" style="padding:0.3rem 0.6rem;">
+      {{$result->name}}
+      <p class="fw-lighter text-muted" style="font-size: 14px; margin-bottom:0px;">{{$result->location}}</p>
+  </a>
+
+  </button>
+@endforeach

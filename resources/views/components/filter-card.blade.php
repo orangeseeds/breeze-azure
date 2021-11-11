@@ -1,6 +1,7 @@
-<div class="col-md-3 ps-3 mb-3 me-4">
-  <div class="card px-3 overflow-hidden bg-white position-relative py-4" style="height:auto;">
+<div class="col-md-3 ps-3 mb-3 me-4 filter-col">
+  <div id="filterCard" class="card px-3 overflow-hidden bg-white position-relative py-4 filter-card slider closed no-padding" style="height:auto;">
     <div class="card-body">
+      <button type="button" class="btn-close btn-filter-close" style="margin-left:95%;" onclick="slideFilterCard()" data-bs-dismiss="toast" aria-label="Close"></button>
       <h5 class="card-title fs-5 fw-bold" style="color:#444444;">Filters</h5>
       <h6 id="resetFilters" class="card-subtitle mb-2 text-muted">
         {{-- <button  type="button" name="button"> --}}
@@ -45,8 +46,8 @@
       <div class="mt-4 range-wrap">
         <h5 class="card-title fs-6 fw-bold" style="color:#444444;">Rating</h5>
         <label id="ratingSliderlabel" for="ratingSlider" class="form-label">Stars </label>
-        <output class="badge bg-secondary"> 3 </output>
-        <input type="range" class="form-range" min="1" value="3" max="5" id="ratingSlider" name="ratingSlider" oninput="this.previousElementSibling.value = this.value">
+        <output class="badge bg-secondary"> 1 </output>
+        <input type="range" class="form-range" min="1" value="1" max="5" id="ratingSlider" name="ratingSlider" oninput="this.previousElementSibling.value = this.value">
       </div>
 
       <div class="mt-4">
@@ -62,8 +63,8 @@
       <div class="mt-4 range-wrap">
         <h5 class="card-title fs-6 fw-bold" style="color:#444444;">Price</h5>
         <label for="priceSlider" id="priceSliderlabel" class="form-label">Rs. </label>
-        <output class="badge bg-secondary"> 10000 </output>
-        <input type="range" disabled class="form-range" min="2000" value="10000" max="20000" step="2000" id="priceSlider" oninput="this.previousElementSibling.value = this.value">
+        <output class="badge bg-secondary"> 20000 </output>
+        <input type="range" disabled class="form-range" min="2000" value="20000" max="20000" step="2000" id="priceSlider" oninput="this.previousElementSibling.value = this.value">
       </div>
 
       <div class="mt-4">
@@ -109,6 +110,66 @@
 
 <script type="text/javascript">
 
+$(document).ready(function() {
+
+  var url = new URL(window.location.href);
+  var search_params = url.searchParams;
+
+  if (search_params.get('search_type') != "filter") {
+    return;
+  }
+
+  if (search_params.get('reviews') != null && search_params.get('reviews') != 'null') {
+    var no_reviews = document.getElementsByName('review_count');
+    no_reviews.forEach((item, i) => {
+      if (item.value == search_params.get('reviews')) {
+        item.click();
+      };
+    });
+  }
+  if (search_params.get('rating_range') != null && search_params.get('rating_range') != 'null') {
+    var rating = !isNaN(parseInt(search_params.get('rating_range'))) ? parseInt(search_params.get('rating_range')) : 1;
+    document.getElementById('ratingSlider').value = rating;
+    document.getElementById('ratingSlider').previousElementSibling.value = rating;
+  }
+  if (search_params.get('course') != null && search_params.get('course') != 'null') {
+    var courses = document.getElementById('courseSelect').getElementsByTagName('option');
+    for (let item of courses) {
+      if (item.value == search_params.get('course')) {
+        item.selected = 'selected';
+      };
+    }
+  }
+  if (search_params.get('price_range') != null && search_params.get('price_range') != 'null') {
+    var price_range = !isNaN(parseInt(search_params.get('price_range'))) ? parseInt(search_params.get('price_range')) : 20000;
+    document.getElementById('priceSlider').value = price_range;
+    document.getElementById('priceSlider').previousElementSibling.value = price_range;
+  }
+  if (search_params.get('country') != null && search_params.get('country') != 'null') {
+    var countries = document.getElementById('countrySelect').getElementsByTagName('option')
+    for (let item of countries) {
+      if (item.value == search_params.get('country')) {
+        item.selected = 'selected';
+      };
+    }
+  }
+  if (search_params.get('class_size') != null && search_params.get('class_size') != 'null') {
+    var class_size = !isNaN(parseInt(search_params.get('class_size'))) ? parseInt(search_params.get('class_size')) : 150;
+    document.getElementsByName('class_size')[0].value = class_size;
+  }
+  checkIfcourseSelected();
+  if (search_params.get('page')) {
+    var query = "?page="+search_params.get('page');
+    getValues(query);
+    addtoURLFiterParams("page", search_params.get('page'));
+  }
+  else{
+    getValues();
+  }
+
+});
+
+
 $('#ratingSlider, #priceSlider, #zero, #fifty, #hundred, #fivehundred, #thousand, #courseSelect, #countrySelect')
   .on('change', function(event) {
       // var rating_val = document.getElementById('ratingSlider').value;
@@ -121,46 +182,59 @@ $('#ratingSlider, #priceSlider, #zero, #fifty, #hundred, #fivehundred, #thousand
 
 $('#courseSelect')
   .on('change', function(event) {
-
-
-    var course = document.getElementById('courseSelect').selectedOptions[0].value;
-    if (course != 0) {
-      $("#priceSlider").prop('disabled', false);
-      document.getElementById('#classSizeButtonSML').disabled = false;
-      document.getElementById('#classSizeButtonMID').disabled = false;
-      document.getElementById('#classSizeButtonLRG').disabled = false;
-    }
-    else{
-      $("#priceSlider").prop('disabled', true);
-      document.getElementById('#classSizeButtonSML').disabled = true;
-      document.getElementById('#classSizeButtonMID').disabled = true;
-      document.getElementById('#classSizeButtonLRG').disabled = true;
-    }
-
+    checkIfcourseSelected();
 });
 
-function getValues() {
+$('#courseSelect, #countrySelect, #ratingSlider, #priceSlider').on('keydown', function(event) {
+    event.preventDefault();
+});
 
-  var rating = document.getElementById('ratingSlider').value;
-  var price = document.getElementById('priceSlider').value;
+function checkIfcourseSelected() {
+  var course = document.getElementById('courseSelect').selectedOptions[0].value;
+  if (course != 0) {
+    $("#priceSlider").prop('disabled', false);
+    document.getElementById('#classSizeButtonSML').disabled = false;
+    document.getElementById('#classSizeButtonMID').disabled = false;
+    document.getElementById('#classSizeButtonLRG').disabled = false;
+  }
+  else{
+    $("#priceSlider").prop('disabled', true);
+    document.getElementById('#classSizeButtonSML').disabled = true;
+    document.getElementById('#classSizeButtonMID').disabled = true;
+    document.getElementById('#classSizeButtonLRG').disabled = true;
+  }
+}
+
+function getValues(url = "") {
+
   var no_reviews = document.getElementsByName('review_count');
+  var rating = document.getElementById('ratingSlider').value;
+  var course = document.getElementById('courseSelect').selectedOptions[0].value;
+  var price = document.getElementById('priceSlider').value;
+  var country = document.getElementById('countrySelect').selectedOptions[0].value;
   var class_size = document.getElementsByName('class_size')[0].value;
+
+
   no_reviews.forEach((item, i) => {
     if (item.checked) {
       no_reviews = item.value;
       return false;
     };
   });
-
-  var course = document.getElementById('courseSelect').selectedOptions[0].value;
-  var country = document.getElementById('countrySelect').selectedOptions[0].value;
-
   course = course < 1 ? null : course;
   country = country < 1 ? null : country;
 
+  addtoURLFiterParams('reviews',no_reviews);
+  addtoURLFiterParams('rating_range',rating);
+  addtoURLFiterParams('course',course);
+  addtoURLFiterParams('price_range',price);
+  addtoURLFiterParams('country',country);
+  addtoURLFiterParams('class_size',class_size);
+
+  console.log("called");
    var _token = $('input[name="_token"]').val();
    $.ajax({
-    url:"/search/filter",
+    url:"/search/filter" + url,
     method:"GET",
     data:{
       reviews : no_reviews,
@@ -171,12 +245,9 @@ function getValues() {
       class_size : class_size,
        _token:_token},
     success:function(data){
-     // console.log(data);
      document.getElementById('searchResult').innerHTML = data;
-
-    }
+   }
    })
-
 }
 
 $('#priceSlider').slider().on('change', function(event) {
@@ -185,15 +256,49 @@ $('#priceSlider').slider().on('change', function(event) {
 });
 
 $('#resetFilters').on('click', function(event) {
-      console.log("naicee");
-      document.getElementById('ratingSlider').value = 3;
-      document.getElementById('priceSlider').value = 10000;
+      // console.log("naicee");
+      document.getElementById('ratingSlider').value = 1;
+      document.getElementById('priceSlider').value = 20000;
       var no_reviews = document.getElementsByName('review_count');
       no_reviews[0].checked = true;
 
       document.getElementById('courseSelect').getElementsByTagName('option')[0].selected = 'selected';
       document.getElementById('countrySelect').getElementsByTagName('option')[0].selected = 'selected';
+      document.getElementsByName('class_size')[0].value = 150;
+      document.getElementById('ratingSlider').previousElementSibling.value = 1;
+      document.getElementById('priceSlider').previousElementSibling.value = 20000;
       getValues()
 });
+
+function paginationHandle(e) {
+  if (getParams(e.explicitOriginalTarget.value)['page']) {
+    var query = "?page="+getParams(e.explicitOriginalTarget.value)['page'];
+    getValues(query);
+    addtoURLFiterParams("page", getParams(e.explicitOriginalTarget.value)['page'])
+  }
+}
+
+function addtoURLFiterParams(name, param) {
+  var url = new URL(window.location.href);
+  var search_params = url.searchParams;
+
+  if (search_params.get('search_type') == null) {
+    search_params.append('search_type', 'filter');
+  }
+  else {
+    search_params.set('search_type', 'filter');
+  }
+
+  if (search_params.get(name) == null) {
+    search_params.append(name, param);
+  }
+  else {
+    search_params.set(name, param);
+  }
+
+  url.search = search_params.toString();
+  var new_url = url.toString();
+  window.history.pushState('page1', 'Title', new_url);
+}
 
 </script>

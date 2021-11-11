@@ -17,10 +17,21 @@ class CompareController extends Controller
 
   public function add(Request $request)
   {
-    $query = $request->get('query');
-    $request = Request::create(route('consultancy.json',$query),'GET');
+    $validatedData = $request->validate([
+        'query' => 'required|string|string|min:2|max:255'
+    ]);
+
+    $data = Consultancy::where('slug', '=', "{$validatedData['query']}")->first();
+
+    if ($data == null) {
+      $message = ["error" => "Consultancy not found!"];
+      return response()->json($message, 404);
+    }
+
+    $request = Request::create(route('consultancy.json',$data),'GET');
     $response = app()->handle($request);
     $consultancy = json_decode($response->getContent(), false);
+    // dd($consultancy);
     return view('components.compare-filled', ["consultancy"=>$consultancy]);
   }
 
@@ -28,9 +39,11 @@ class CompareController extends Controller
   {
    if($request->get('query'))
    {
-     $query = $request->get('query');
-       $data = Consultancy::where('name', 'LIKE', "%{$query}%")->get();
-       return view('compare.suggest', ["data"=>$data]);
+     $validatedData = $request->validate([
+         'query' => 'required|string|min:2|max:255'
+     ]);
+     $data = Consultancy::where('name', 'LIKE', "%{$validatedData['query']}%");
+     return view('compare.suggest', ["data"=>$data->paginate(10)]);
    }
   }
 }

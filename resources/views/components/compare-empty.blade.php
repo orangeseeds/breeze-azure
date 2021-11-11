@@ -1,7 +1,7 @@
 <div>
-  <div class="card px-2 pb-4 mt-3 search-result overflow-hidden text-center" style="height:100%;">
+  <div class="card px-2 pb-4 mt-3 search-result overflow-hidden text-center" style="height:775px; opacity:70%;">
     <h5 class="card-title fw-bold mb-0" style="color: #444444;">Such Empty Here...</h5>
-      <button id="add_button" class="border-dashed border-4 border-gray-400 rounded text-6xl text-center text-gray-400 py-40 my-20 w-full" type="button" name="add">
+      <button id="add_button" class="border-dashed border-4 border-gray-400 rounded text-6xl text-center text-gray-400 py-auto my-20 w-full" style="height:500px;" type="button" name="add">
       +
       </button>
       {{-- <div class="text-gray-500 text-center text-lg mt-16">

@@ -20,7 +20,7 @@ class ReviewController extends Controller
             'writer_name' => 'required|string|max:255',
             'writer_email' => 'required|string|email|max:255',
             'joined_at' => 'required|digits:4|integer|min:1900|max:'.(date('Y')+1),
-            'description' => 'required|min:3|max:600',
+            'description' => 'required|min:3|max:1000',
             'rating' => 'numeric|min:0|max:5',
             'course_id' => 'required|numeric|exists:App\Models\Course,id',
             'consultancy_id' => 'required|numeric|exists:App\Models\Consultancy,id'
@@ -30,18 +30,14 @@ class ReviewController extends Controller
 
         $review = new Review($validatedData);
 
-
         $consultancy->reviews()->save($review);
 
-        $consultancy->rating = $consultancy->reviews->avg('rating');
-        $consultancy->save();
-
-        return redirect('/consultancy/'."$consultancy->slug");
+        return redirect('/consultancy/'."$consultancy->slug")->with('success', 'Thankyou for the leaving a review!');
     }
 
     public function index(Consultancy $consultancy)
     {
-      return view('review.index', ['consultancy'=>$consultancy]);
+      return view('review.index', ['consultancy'=>$consultancy, 'reviews'=> $consultancy->reviews()->paginate(10)]);
     }
 
     public function scorecard(Consultancy $consultancy)

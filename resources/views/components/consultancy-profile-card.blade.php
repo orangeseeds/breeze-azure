@@ -1,5 +1,5 @@
 
-<div class="col-md-4 ps-3 mb-3">
+<div class="col-md-4 ps-3 mb-3 consultancy-profile-card">
   <div class="card py-0 overflow-hidden position-relative">
     <svg class="bd-placeholder-img card-img-top" width="100%" height="290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
       <title>Placeholder</title>
@@ -45,7 +45,7 @@
 </a>
 </svg>
 
-<a class="px-2 border" href="{!! route('compare') !!}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<em>Start Compairing</em>">
+<a class="px-2 border" href="{!! route('compare') !!}?cons1={{$consultancy->slug}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<em>Start Compairing</em>">
 <span class="badge" style="color:currentColor;">Compare</span>
 </a>
 

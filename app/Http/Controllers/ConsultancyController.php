@@ -15,6 +15,7 @@ class ConsultancyController extends Controller
     public function show(Request $request, Consultancy $consultancy)
     {
         PageViewed::dispatch($consultancy);
+        $consultancy->scorecard();
         return view('consultancy.show', ["consultancy"=>$consultancy]);
     }
 

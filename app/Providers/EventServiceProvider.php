@@ -8,6 +8,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\PageViewed;
 use App\Listeners\IncrementViewCount;
+use App\Models\Review;
+use App\Observers\ReviewObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Review::observe(ReviewObserver::class);
     }
 }

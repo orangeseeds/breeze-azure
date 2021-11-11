@@ -3,7 +3,11 @@
   @csrf
 
   <div class="input-group flex-nowrap" style="width:30vw;">
-  <input id="navSearchInput" type="text" class="form-control nav-search" placeholder="Search..." onkeyup="showSuggestionsNav()">
+    <form class="" action="{{route('search.name')}}" method="GET">
+      @csrf
+      @method("GET")
+      <input id="navSearchInput" type="text" name="consultancy_name" autocomplete="off" class="form-control nav-search" placeholder="Search..." onkeyup="showSuggestionsNav()">
+    </form>
   <span class="input-group-text bg-transparent" id="addon-wrapping">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -43,19 +47,20 @@
 
   function showSuggestionsNav(e) {
 
+
           var query = document.getElementById('navSearchInput').value;
-          if(query != '')
+          if(query.length >= 2)
           {
            var _token = $('input[name="_token"]').val();
            $.ajax({
-            url:"/compare/suggest",
+            url:"/fetch",
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
              // $('#suggestionList').fadeIn();
              document.getElementById('navSearchSuggestion').classList.remove("d-none")
              $('#navSearchSuggestion').html(data);
-             console.log(data);
+             // console.log(data);
             }
            })
           }
@@ -68,5 +73,22 @@
    }, 200);
 
   });
+
+
+  function getParams(url) {
+    let params = {};
+    new URL(url).searchParams.forEach(function (val, key) {
+      if (params[key] !== undefined) {
+        if (!Array.isArray(params[key])) {
+          params[key] = [params[key]];
+        }
+        params[key].push(val);
+      } else {
+        params[key] = val;
+      }
+    });
+
+    return params;
+  }
 
 </script>

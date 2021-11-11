@@ -4,7 +4,11 @@ namespace Database\Factories;
 
 use App\Models\Review;
 use App\Models\Course;
+use App\Models\Consultancy;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
+
+
 
 class ReviewFactory extends Factory
 {
@@ -22,14 +26,19 @@ class ReviewFactory extends Factory
      */
     public function definition()
     {
+        $this->consultancy = Consultancy::inRandomOrder()->first();
+
+        $this->consultancy->rating = $this->consultancy->reviews()->avg('rating');
+        $this->consultancy->save();
         return [
             //
-            'writer' => $this->faker->name,
-            'email' => $this->faker->email,
-            'joined_at' => $this->faker->year,
-            'description' => $this->faker->paragraph,
+            'writer_name' => $this->faker->name(),
+            'writer_email' => $this->faker->safeEmail(),
+            'joined_at' => $this->faker->year(),
+            'description' => $this->faker->paragraph(),
+            'consultancy_id' => $this->consultancy->id,
             'course_id' => Course::inRandomOrder()->first()->id,
-            'rating' => $this->faker->numberBetween(0,6),
+            'rating' => $this->faker->numberBetween(1,5),
         ];
     }
 }

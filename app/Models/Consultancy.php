@@ -16,6 +16,9 @@ class Consultancy extends Model
         'created_at',
         'updated_at'
     ];
+    protected $fillable = [
+        'rating',
+    ];
 
     public static function createSlug($title)
     {
@@ -67,9 +70,24 @@ class Consultancy extends Model
       return $this->hasMany('App\Models\Application');
     }
 
+    public function scorecard()
+    {
+      $ratings = $this->reviews->pluck('rating')->countBy();
+      $collection = collect(['1.00' =>0, '2.00' =>0,"3.00" =>0,"4.00" =>0,"5.00" =>0]);
+
+      if ($this->reviews()->count() == 0) {
+        return $collection;
+      }
+      $ratings = $collection->merge($ratings)
+        ->map(function ($item, $key)
+        {
+            return intval($item / $this->reviews()->count() * 100);
+        });
+
+      return $ratings;
+    }
+
     public function scopeWithFilters($query, $parameters){
-
-
 
       return $query
         ->when($parameters['reviews'], function($query) use ($parameters){
@@ -93,5 +111,5 @@ class Consultancy extends Model
               });
           });
 
-    }
-}
+        }
+      }

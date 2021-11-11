@@ -1,9 +1,17 @@
+  @php
+    if (!isset($scorecard))
+    {
+      $scorecard = [ '5.00' => 0, '4.00' => 0, '3.00' => 0, '2.00' => 0, '1.00' => 0 ];
+    }
+  @endphp
+
+
 <div class="card border-0">
   <div class="row">
     <div id="graph-bar" class="col-md-8 ps-3">
 
     <div class="progress">
-      <div class="progress-bar bg-rating" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-rating" role="progressbar" style="width: {{$scorecard['5.00']}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
       <div class="position-absolute py-1 inside-chart" style="width:100%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#444444" class="bi bi-star-fill" viewBox="0 0 16 16">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
@@ -23,7 +31,7 @@
       </div>
     </div>
       <div class="progress">
-        <div class="progress-bar bg-rating" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-rating" role="progressbar" style="width: {{$scorecard['4.00']}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
         <div class="position-absolute py-1 inside-chart" style="width:100%;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#444444" class="bi bi-star-fill" viewBox="0 0 16 16">
             <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
@@ -43,7 +51,7 @@
         </div>
       </div>
     <div class="progress">
-      <div class="progress-bar bg-rating" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-rating" role="progressbar" style="width: {{$scorecard['3.00']}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
       <div class="position-absolute py-1 inside-chart" style="width:100%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#444444" class="bi bi-star-fill" viewBox="0 0 16 16">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
@@ -63,7 +71,7 @@
       </div>
     </div>
     <div class="progress">
-      <div class="progress-bar bg-rating" role="progressbar" style="width: 20%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-rating" role="progressbar" style="width: {{$scorecard['2.00']}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
       <div class="position-absolute py-1 inside-chart" style="width:100%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#444444" class="bi bi-star-fill" viewBox="0 0 16 16">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
@@ -83,7 +91,7 @@
       </div>
     </div>
     <div class="progress">
-      <div class="progress-bar bg-rating" role="progressbar" style="width: 20%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar bg-rating" role="progressbar" style="width: {{$scorecard['1.00']}}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
       <div class="position-absolute py-1 inside-chart" style="width:100%;">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#444444" class="bi bi-star-fill" viewBox="0 0 16 16">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
@@ -107,23 +115,23 @@
     <div class="stars-description">
       <div class="progress py-1 bg-white">
         <x-rating-stars rating="5" /> <!--16-->
-        <span>- 100%</span>
+        <span>- {{$scorecard['5.00']}}%</span>
       </div>
         <div class="progress py-1 bg-white">
         <x-rating-stars rating="4" /> <!--16-->
-          <span>- 90%</span>
+          <span>- {{$scorecard['4.00']}}%</span>
         </div>
       <div class="progress py-1 bg-white">
         <x-rating-stars rating="3" /> <!--16-->
-        <span>- 80%</span>
+        <span>- {{$scorecard['3.00']}}%</span>
       </div>
       <div class="progress py-1 bg-white">
         <x-rating-stars rating="2" /> <!--16-->
-        <span>- 70%</span>
+        <span>- {{$scorecard['2.00']}}%</span>
       </div>
       <div class="progress py-1 bg-white">
         <x-rating-stars rating="1" /> <!--16-->
-        <span>- 60%</span>
+        <span>- {{$scorecard['1.00']}}%</span>
       </div>
     </div>
 

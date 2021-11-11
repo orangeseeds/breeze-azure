@@ -34,7 +34,7 @@ class SearchController extends Controller
 
     // dd($validatedData);
 
-    $consultancies = Consultancy::withFilters( $validatedData )->get();
+    $consultancies = Consultancy::withFilters( $validatedData )->paginate(10);
 
     // return response()->json($consultancies, 200);
     return view('search.display', ['result' => $consultancies]);

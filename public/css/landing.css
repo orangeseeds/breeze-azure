@@ -207,6 +207,10 @@ margin: 0px;
   box-shadow: 6px 3px 10px #B4B5BF;
 }
 
+.helper-text{
+  visibility: hidden;
+}
+
 /* Footer section start */
 
 
@@ -270,6 +274,14 @@ margin: 0px;
     margin: auto !important;
     width: 100%;
     min-width: 385px;
+  }
+
+  .helper-text{
+    visibility: visible;
+    position: fixed;
+    left: 0;
+    top: 85.5%;
+    z-index: 999;
   }
 
   .navbar-nav{

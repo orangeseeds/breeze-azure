@@ -32,7 +32,7 @@ class HomeController extends Controller
 
         SendContactEmail::dispatch($validatedData);
 
-        return redirect()->back()->with('message','We will get back to you as soon as possible!');
+        return redirect()->back()->with('success','Thankyou for leaving a message. We will get back to you soon!');
     }
 
     public function searchName(Request $request)

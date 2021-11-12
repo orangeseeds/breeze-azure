@@ -57,9 +57,10 @@
 @props([
   'time' => 5,
   'id' => 1,
+  'style' => "",
 ])
 
-<div id="hideMe{{$id}}" class="toast align-items-center text-white bg-success border-0 ms-auto" role="alert" aria-live="assertive" aria-atomic="true" role="alert">
+<div id="hideMe{{$id}}" style="{{$style}}" class="toast align-items-center text-white bg-success border-0 ms-auto" role="alert" aria-live="assertive" aria-atomic="true" role="alert">
   <div class="d-flex">
     <div class="toast-body" style="color: white !important; font-size:12px !important;">
       {{$slot}}

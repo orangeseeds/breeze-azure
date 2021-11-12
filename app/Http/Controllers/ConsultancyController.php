@@ -80,6 +80,6 @@ class ConsultancyController extends Controller
 
       SendApplicationEmail::dispatch($validatedData);
 
-      return redirect()->back()->with('message', 'The application form has been submitted successfully');
+      return redirect()->back()->with('success', 'The application form has been submitted successfully!');
     }
 }

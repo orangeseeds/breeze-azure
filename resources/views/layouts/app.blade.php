@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <title>Hello, world!</title>
+    <title>{{ isset($pagetitle) ? $pagetitle : "title-of-page" }}</title>
   </head>
   <body data-bs-spy="scroll" data-bs-target="#EpicNavbar" data-bs-offset="40" class="scrollspy-example" tabindex="0">
 

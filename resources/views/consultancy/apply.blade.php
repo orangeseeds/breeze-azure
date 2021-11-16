@@ -1,11 +1,15 @@
   <x-app-layout>
 
+    <x-slot name="pagetitle">
+      Apply for {{$consultancy->name}} - Breeze
+    </x-slot>
+
     @if (session()->has('success'))
       <x-notification time="3" id="1" style="position:absolute; top:62px; right:5%; z-index:10000;">
         {{session()->get('success')}}
       </x-notification>
     @endif
-    
+
       <div class="container mt-5 py-5">
         <div class="row">
           <div class="col">

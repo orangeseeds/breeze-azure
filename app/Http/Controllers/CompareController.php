@@ -28,11 +28,11 @@ class CompareController extends Controller
       return response()->json($message, 404);
     }
 
-    $request = Request::create(route('consultancy.json',$data),'GET');
-    $response = app()->handle($request);
-    $consultancy = json_decode($response->getContent(), false);
+    // $request = Request::create(route('consultancy.json',$data),'GET');
+    // $response = app()->handle($request);
+    // $consultancy = json_decode($response->getContent(), false);
     // dd($consultancy);
-    return view('components.compare-filled', ["consultancy"=>$consultancy]);
+    return view('components.compare-filled', ["consultancy"=>$data]);
   }
 
   public function suggest(Request $request)

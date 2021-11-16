@@ -1,5 +1,9 @@
 <x-app-layout>
 
+  <x-slot name="pagetitle">
+    Review {{$consultancy->name}} - Breeze
+  </x-slot>
+
     <div class="container mt-5 py-5">
       <div class="row">
         <div class="col spacing-col">

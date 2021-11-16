@@ -5,7 +5,7 @@
       <div class="card px-2 pb-4 mt-3 search-result overflow-hidden">
         <div class="overflow-hidden" style="height: 200px;">
           <button id="comparecard" type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light" aria-label="Close"></button>
-          <img class="" style="object-fit: cover;" src='{{ asset('/storage/'.$consultancy->cover_picture) }}' alt="">
+          <img class="" style="object-fit: contain; width:100%;" src='{{ asset('/storage/'.$consultancy->cover_picture) }}' alt="">
         </div>
         <div class="card-body py-1 pt-4" style="z-index:10;">
           <a href="{!! route('consultancy.show',$consultancy->slug) !!}" style="text-decoration: none;">
@@ -23,7 +23,7 @@
               </span>
             </div>
           </div>
-          <div class="mt-4" style="height:173px; overflow:auto;">
+          <div class="mt-4" style="height:200px; overflow:auto;">
             <h5 class="card-title fs-6 fw-bold" style="color:#444444;">Courses</h5>
 
             @foreach ($consultancy->courses as $course)
@@ -73,9 +73,9 @@
 
           <div class="mt-4">
             <h5 class="card-title fs-6 fw-bold" style="color:#444444;">Countries</h5>
-            <img data-bs-toggle="tooltip" data-bs-placement="bottom" title="Norway" class="flag-icon" src="https://image.flaticon.com/icons/png/512/197/197579.png" alt="" style="width: 30px;">
-            <img class="flag-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="England" class="flag-icon" src="https://image.flaticon.com/icons/png/512/197/197485.png" alt="" style="width: 30px;">
-
+            @foreach ($consultancy->countries as $country)
+              <x-country-icon title="{{$country->name}}" src="{{$country->flag}}" />
+            @endforeach
           </div>
 
           <div class="mt-4">

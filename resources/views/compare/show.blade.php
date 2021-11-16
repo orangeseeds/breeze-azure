@@ -1,5 +1,9 @@
 <x-app-layout>
 
+  <x-slot name="pagetitle">
+    Compare Consultancies - Breeze
+  </x-slot>
+
 <div class="container mt-5 py-5">
 
   <div class="text-center mb-5">
@@ -260,7 +264,7 @@ function showSuggestions(e) {
       });
 
       if (itemCollapsed) {
-        elem.parent().height(173)
+        elem.parent().height(200)
       }
       else{
         elem.parent().height(250)

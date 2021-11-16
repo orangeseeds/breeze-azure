@@ -1,5 +1,9 @@
 <x-app-layout>
 
+  <x-slot name="pagetitle">
+    {{$consultancy->name}} - Breeze
+  </x-slot>
+
   @if (session()->has('success'))
     <x-notification time="3" id="1" style="position:absolute; top:62px; right:5%; z-index:10000;">
       {{session()->get('success')}}
@@ -96,7 +100,11 @@
           <div class="card px-2 mt-3 py-4">
             <div class="card-body">
               <h5 id="Countries" class="card-title mb-2 fs-5 fw-bold">Countries</h5>
-              <x-country-icon attribute="value" />
+              <div class="overflow-auto">
+                @foreach ($consultancy->countries as $country)
+                  <x-country-icon title="{{$country->name}}" src="{{$country->flag}}" />
+                @endforeach
+            </div>
             </div>
           </div>
 

@@ -44,6 +44,7 @@ Route::post('/consultancy/{consultancy}/review', [ReviewController::class, 'stor
 
 Route::get('consultancy/{consultancy}/review/scorecard',[ReviewController::class, 'scorecard'])->name('review.scorecard');
 
+Route::get('/fill', [HomeController::class, 'fillCountries'])->name('fill');
 Route::get('/search/name', [HomeController::class, 'searchName'])->name('search.name');
 Route::get('/search/course', [HomeController::class, 'searchCourse'])->name('search.course');
 Route::post('/fetch',[HomeController::class, 'fetch'])->name('search.fetch');

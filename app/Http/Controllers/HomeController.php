@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Consultancy;
 use App\Models\Course;
+use App\Models\Country;
 // use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendContactEmail;
 use DB;
@@ -75,5 +76,38 @@ class HomeController extends Controller
          $data = Consultancy::where('name', 'LIKE', "%{$query}%");
          return view('search.autocomplete',["data"=>$data->paginate(10)]);
      }
+    }
+
+    public function fillCountries(Request $request)
+    {
+
+      $countries = Country::all()->pluck('name');
+
+      $countries = $countries->map(function ($item, $key) {
+          return strtolower($item);
+      });
+
+      $json = collect($request->json()->all());
+
+      $json = $json->mapWithKeys(function ($item, $key) {
+          // return strtolower($key);
+          return [strtolower($key) => $item];
+          // dd()
+      });
+
+      // dd($json);
+      $contained = [];
+
+      foreach ($json as $key => $value) {
+        if ($countries->contains($key)) {
+          $contained["$key"] = $value;
+          $country = Country::where('name', $key)->update(['flag' => $value]);;
+        }
+      }
+      $contained = collect($contained);
+      // dd($contained->sortKeys());
+
+
+      return response()->json($contained->sortKeys());
     }
 }

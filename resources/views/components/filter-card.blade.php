@@ -115,6 +115,9 @@ $(document).ready(function() {
   var url = new URL(window.location.href);
   var search_params = url.searchParams;
 
+  if (search_params.get('course') != null) {
+    window.history.replaceState('page1', 'Title', '{{route('consultancy.index')}}'+'?search_type=filter&course='+search_params.get('course'));
+  }
   if (search_params.get('search_type') != "filter") {
     return;
   }
@@ -206,7 +209,7 @@ function checkIfcourseSelected() {
 }
 
 function getValues(url = "") {
-
+  console.log("calllled");
   var no_reviews = document.getElementsByName('review_count');
   var rating = document.getElementById('ratingSlider').value;
   var course = document.getElementById('courseSelect').selectedOptions[0].value;
@@ -231,7 +234,6 @@ function getValues(url = "") {
   addtoURLFiterParams('country',country);
   addtoURLFiterParams('class_size',class_size);
 
-  console.log("called");
    var _token = $('input[name="_token"]').val();
    $.ajax({
     url:"/search/filter" + url,
@@ -246,6 +248,7 @@ function getValues(url = "") {
        _token:_token},
     success:function(data){
      document.getElementById('searchResult').innerHTML = data;
+     window.history.pushState('page1', 'Title', window.location.href);
    }
    })
 }
@@ -298,7 +301,7 @@ function addtoURLFiterParams(name, param) {
 
   url.search = search_params.toString();
   var new_url = url.toString();
-  window.history.pushState('page1', 'Title', new_url);
+  window.history.replaceState('page1', 'Title', new_url);
 }
 
 </script>

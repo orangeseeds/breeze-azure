@@ -1,5 +1,16 @@
 <x-app-layout>
 
+  <x-slot name="pagetitle">
+
+    @if (request()->get('search_type') == "filter")
+      Filtered Results - Breeze
+    @elseif (request()->route()->getName() == "consultancy.index")
+      Consultancies - Breeze
+    @else
+      Search Results - Breeze
+    @endif
+  </x-slot>
+
 <div class="container mt-5 py-5">
   <div class="row filter-search-row">
     <div class="col-md-1 spacing-col" style="width:4%;">
